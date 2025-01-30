@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from signed_motif_detection import *
 
 
-def main(session, directory):
+def main(session, directory_input, directory_output):
         # stimuli = ['natural_scene', 'natural_movie', 'drifting_gratings', 'static_gratings', 'spontaneous']
         stimuli = ['drifting_gratings']
         # stimuli = ['drifting_gratings']
@@ -19,10 +19,8 @@ def main(session, directory):
             intensity_df_list = []
             significant_ccg_list = []
             for stimulus in stimuli:
-                directory='1_func_mats'
-                session='0'
 
-                data = np.load(f'{directory}/{session}_{stimulus}.npz')
+                data = np.load(f'{directory_input}/{session}_{stimulus}.npz')
                 significant_ccg = data['significant_ccg']  # weights matrix with NaNs replaced by 0s
                 # significant_ccg = significant_ccg[:100, :100]
                 significant_confidence = data['significant_confidence']  # Load confidence matrix separately if available
@@ -66,4 +64,4 @@ if __name__ == "__main__":
     parser.add_argument("--directory_output", required=True, help="Directory containing output files")
     args = parser.parse_args()
 
-    main(args.session, args.directory)
+    main(args.session, args.directory_input, args.directory_output)

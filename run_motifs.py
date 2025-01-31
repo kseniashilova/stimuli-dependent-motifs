@@ -10,7 +10,7 @@ from signed_motif_detection import *
 
 def main(session, directory_input, directory_output):
         # stimuli = ['natural_scene', 'natural_movie', 'drifting_gratings', 'static_gratings', 'spontaneous']
-        stimuli = ['drifting_gratings']
+        stimuli = ['natural_scene','natural_movie','drifting_gratings']
         # stimuli = ['drifting_gratings']
         # model_choices = ['erdos_renyi', 'degree_preserving', 'pair_preserving', 'signed_pair_preserving']
         model_choices = ['signed_pair_preserving']

@@ -5,7 +5,7 @@ import argparse
 # import sys
 # sys.path.append(os.getcwd())
 
-from signed_motif_detection import *
+from matrix_motif_detection import *
 
 
 def main(session, directory_input, directory_output):
@@ -18,7 +18,7 @@ def main(session, directory_input, directory_output):
         weight = 'confidence'  # Z score of jitter-corrected CCG, can also be 'weight' for connection strength (jitter-corrected CCG) in the example graph. Use your own edge weight for your graph.
         cc = False
         Q = 100
-        parallel = True  # Set to True if you want to use multiprocessing to generate random graphs in parallel.
+        parallel = False  # Set to True if you want to use multiprocessing to generate random graphs in parallel.
         num_cores = 23
         motif_types = ['021D', '021U', '021C', '111D', '111U', '030T', '030C', '201', '120D', '120U', '120C', '210',
                        '300']
@@ -48,9 +48,9 @@ def main(session, directory_input, directory_output):
                 for i, j in zip(*np.nonzero(significant_ccg)):
                     G[i][j]['confidence'] = significant_confidence[i, j]
 
-                random_graphs = random_graph_generator(input_G=input_G, num_rewire=num_rewire, model=model, weight=weight, cc=cc, Q=Q, parallel=parallel, num_cores=num_cores, disable=False)
+                random_graphs = random_graph_generator(input_G=input_G, num_rewire=num_rewire, model=model, weight=weight, cc=cc, Q=Q, parallel=True, num_cores=num_cores, disable=False)
 
-
+                print('Random graphs are done. ')
                 intensity_df = motif_census(G, random_graphs, all_signed_motif_types, motif_types, motif_edges, motif_sms, weight=weight, parallel=parallel, num_cores=num_cores)
                 intensity_df.to_csv(f"{directory_output}/{session}_{stimulus}_intensity_df.csv", index=True)
                 intensity_df_list.append(intensity_df)
